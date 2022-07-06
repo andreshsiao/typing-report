@@ -61,7 +61,8 @@ def current_day_report_generation(df:pd.DataFrame, date_today):
     fig.update_yaxes(title='Typing Speed (wpm)', range=[20,desc_stats['top_spd']['spd'][0]+10])
     fig.update_yaxes(title='Error Rate (%)', showgrid=False, secondary_y = True, range=[0,100], ticksuffix='%')
     fig.show()
-    #py.plot(fig, filename='Typing Performance', auto_open=True)
+    url = py.iplot(fig, filename='Typing Performance', auto_open=True)
+    return url
 
 def descriptive_stats(df:pd.DataFrame):
     desc_stats = {
@@ -95,9 +96,9 @@ def get_typing_data(raw_data_path:str) -> pd.DataFrame:
 
 if __name__ == '__main__':
     RAW_DATA_PATH = './typing-data.json'
-    CERTIFICATE_PATH = r'./Plotly Certificate/plotly_certificate.cer'
+    CERTIFICATE_PATH = 'Plotly Certificate/*.plotly.com.cer'
     os.environ['REQUESTS_CA_BUNDLE'] = CERTIFICATE_PATH
     df = get_typing_data(RAW_DATA_PATH)
     #td = datetime.datetime.today().date()
     yesterday = datetime.date.today() - datetime.timedelta(days=1)
-    report = current_day_report_generation(df, yesterday)
+    print(current_day_report_generation(df, yesterday))
